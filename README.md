@@ -1,4 +1,4 @@
 # photovolt
 Simulateur de rentabilité d'installation photovoltaïque
 
-[photovolt.html]
+[Calculateur Photovoltaïque](photovolt.html)
