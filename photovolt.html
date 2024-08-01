@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur Photovoltaïque</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #28a745;
+            border-radius: 5px;
+            background-color: #e9f9e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculateur Photovoltaïque</h2>
+        <label for="power">Puissance de l'installation (kWc) :</label>
+        <input type="number" id="power" value="36">
+        
+        <label for="pricePerKw">Coût de l'installation par kWc (€) :</label>
+        <input type="number" id="pricePerKw" value="1500">
+        
+        <label for="tariff">Tarif de rachat (€/kWh) :</label>
+        <input type="number" step="0.0001" id="tariff" value="0.1318">
+        
+        <label for="production">Production annuelle moyenne par kWc (kWh/kWc) :</label>
+        <input type="number" id="production" value="1200">
+        
+        <label for="surface">Surface nécessaire par kWc (m²/kWc) :</label>
+        <input type="number" step="0.1" id="surface" value="7">
+        
+        <button onclick="calculate()">Calculer</button>
+        
+        <div class="result" id="result"></div>
+    </div>
+    
+    <script>
+        function calculate() {
+            // Get values from inputs
+            const power = parseFloat(document.getElementById('power').value);
+            const pricePerKw = parseFloat(document.getElementById('pricePerKw').value);
+            const tariff = parseFloat(document.getElementById('tariff').value);
+            const production = parseFloat(document.getElementById('production').value);
+            const surfacePerKw = parseFloat(document.getElementById('surface').value);
+            
+            // Calculate total installation cost
+            const totalPrice = power * pricePerKw;
+            
+            // Calculate annual production
+            const annualProduction = power * production;
+            
+            // Calculate annual revenue
+            const annualRevenue = annualProduction * tariff;
+            
+            // Calculate ROI
+            const roi = (annualRevenue / totalPrice) * 100;
+            
+            // Calculate payback period
+            const paybackPeriod = totalPrice / annualRevenue;
+            
+            // Calculate total surface
+            const totalSurface = power * surfacePerKw;
+            
+            // Calculate total revenue over 25 years
+            const totalRevenue25Years = annualRevenue * 25;
+            
+            // Calculate net profit over 25 years
+            const netProfit = totalRevenue25Years - totalPrice;
+            
+            // Display results
+            document.getElementById('result').innerHTML = `
+                <p>Coût total de l'installation : ${totalPrice.toFixed(2)} €</p>
+                <p>Production annuelle : ${annualProduction.toFixed(2)} kWh</p>
+                <p>Revenu annuel : ${annualRevenue.toFixed(2)} €</p>
+                <p>ROI : ${roi.toFixed(2)} %</p>
+                <p>Période de récupération : ${paybackPeriod.toFixed(2)} ans</p>
+                <p>Surface nécessaire : ${totalSurface.toFixed(2)} m²</p>
+                <p>Revenus totaux sur 25 ans : ${totalRevenue25Years.toFixed(2)} €</p>
+                <p>Bénéfice net sur 25 ans : ${netProfit.toFixed(2)} €</p>
+            `;
+        }
+    </script>
+</body>
+</html>
