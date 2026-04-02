@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photovolt — Simulateur photovoltaïque</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Simulateur de rentabilité photovoltaïque</h1>
+    <p class="subtitle">Calculez un scénario avec hypothèses techniques et financières sur 25 ans.</p>
+
+    <form id="pv-form" novalidate>
+      <section class="grid" aria-label="Paramètres principaux">
+        <div class="field">
+          <label for="power">Puissance de l'installation (kWc)</label>
+          <input type="number" id="power" name="power" min="0.1" step="0.1" required value="36" />
+        </div>
+
+        <div class="field">
+          <label for="pricePerKw">Coût d'installation par kWc (€)</label>
+          <input type="number" id="pricePerKw" name="pricePerKw" min="1" step="1" required value="1500" />
+        </div>
+
+        <div class="field">
+          <label for="tariff">Tarif de rachat (€/kWh)</label>
+          <input type="number" id="tariff" name="tariff" min="0" step="0.0001" required value="0.1318" />
+        </div>
+
+        <div class="field">
+          <label for="production">Production annuelle moyenne (kWh/kWc)</label>
+          <input type="number" id="production" name="production" min="1" step="1" required value="1200" />
+        </div>
+
+        <div class="field">
+          <label for="surface">Surface nécessaire (m²/kWc)</label>
+          <input type="number" id="surface" name="surface" min="0.1" step="0.1" required value="7" />
+        </div>
+
+        <div class="field">
+          <label for="years">Horizon d'étude (ans)</label>
+          <input type="number" id="years" name="years" min="1" max="50" step="1" required value="25" />
+        </div>
+      </section>
+
+      <details class="assumptions" open>
+        <summary>Hypothèses avancées</summary>
+        <section class="grid" aria-label="Hypothèses avancées">
+          <div class="field">
+            <label for="degradationRate">Dégradation annuelle (%)</label>
+            <input type="number" id="degradationRate" name="degradationRate" min="0" max="10" step="0.01" value="0.5" />
+          </div>
+
+          <div class="field">
+            <label for="omCostPercent">O&M annuel (% du CAPEX)</label>
+            <input type="number" id="omCostPercent" name="omCostPercent" min="0" max="20" step="0.01" value="1.0" />
+          </div>
+
+          <div class="field">
+            <label for="tariffGrowthRate">Évolution tarifaire annuelle (%)</label>
+            <input type="number" id="tariffGrowthRate" name="tariffGrowthRate" min="-10" max="10" step="0.01" value="0.0" />
+          </div>
+
+          <div class="field">
+            <label for="discountRate">Taux d'actualisation (%)</label>
+            <input type="number" id="discountRate" name="discountRate" min="0" max="30" step="0.01" value="4.0" />
+          </div>
+
+          <div class="field">
+            <label for="inverterYear">Remplacement onduleur (année)</label>
+            <input type="number" id="inverterYear" name="inverterYear" min="1" max="50" step="1" value="12" />
+          </div>
+
+          <div class="field">
+            <label for="inverterCost">Coût remplacement onduleur (€)</label>
+            <input type="number" id="inverterCost" name="inverterCost" min="0" step="1" value="6000" />
+          </div>
+        </section>
+      </details>
+
+      <button type="submit">Calculer</button>
+    </form>
+
+    <section id="alert" class="alert" role="alert" aria-live="polite"></section>
+
+    <section id="result" class="result" aria-live="polite" aria-label="Résultats"></section>
+  </main>
+
+  <script type="module" src="calculator.js"></script>
+</body>
+</html>
